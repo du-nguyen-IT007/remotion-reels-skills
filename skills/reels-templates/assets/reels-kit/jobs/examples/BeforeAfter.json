@@ -1,0 +1,35 @@
+{
+  "template": "BeforeAfter",
+  "name": "example-beforeafter",
+  "props": {
+    "before": {
+      "src": "footage.mp4",
+      "start": 0,
+      "label": "PLAIN TREE"
+    },
+    "after": {
+      "src": "footage.mp4",
+      "start": 9.458,
+      "label": "WITH YOUR STORY"
+    },
+    "mode": "wipe",
+    "duration": 5.5,
+    "hook": {
+      "lines": [
+        "One ornament",
+        "changes *everything*"
+      ],
+      "duration": 1.9
+    },
+    "cta": {
+      "lines": [
+        "Make it yours"
+      ],
+      "button": "Shop now",
+      "duration": 1.8
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

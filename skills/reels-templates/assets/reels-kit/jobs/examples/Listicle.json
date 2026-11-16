@@ -1,0 +1,52 @@
+{
+  "template": "Listicle",
+  "name": "example-listicle",
+  "props": {
+    "header": "3 reasons they'll love it",
+    "items": [
+      {
+        "clip": {
+          "src": "footage.mp4",
+          "start": 7.458,
+          "duration": 2.6,
+          "speed": 0.7
+        },
+        "title": "Made just for them",
+        "text": "Names, dates, your story"
+      },
+      {
+        "clip": {
+          "src": "footage.mp4",
+          "start": 9.458,
+          "duration": 2.6,
+          "speed": 0.6,
+          "transition": "whip"
+        },
+        "title": "Hangs all year",
+        "text": "Not only at Christmas"
+      },
+      {
+        "clip": {
+          "src": "footage.mp4",
+          "start": 11.083,
+          "duration": 4.6,
+          "speed": 0.55,
+          "transition": "zoom"
+        },
+        "title": "Ships in 48 hours",
+        "text": "Gift-ready packaging"
+      }
+    ],
+    "itemBand": "lower",
+    "cta": {
+      "lines": [
+        "Personalize yours"
+      ],
+      "button": "Shop now",
+      "duration": 2.2
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

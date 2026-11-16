@@ -1,0 +1,50 @@
+{
+  "template": "PollSticker",
+  "name": "example-pollsticker",
+  "props": {
+    "question": "Which gift would you keep?",
+    "options": [
+      {
+        "label": "Gift card",
+        "percent": 14
+      },
+      {
+        "label": "Custom ornament",
+        "percent": 86
+      }
+    ],
+    "revealAt": 3.4,
+    "band": "lower",
+    "clips": [
+      {
+        "src": "footage.mp4",
+        "start": 7.458,
+        "duration": 2.8,
+        "speed": 0.66
+      },
+      {
+        "src": "footage.mp4",
+        "start": 11.083,
+        "duration": 4.4,
+        "speed": 0.56,
+        "transition": "zoom"
+      }
+    ],
+    "hook": {
+      "lines": [
+        "Be honest…"
+      ],
+      "duration": 1.8
+    },
+    "cta": {
+      "lines": [
+        "86% chose this"
+      ],
+      "button": "Shop now",
+      "duration": 2.2
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

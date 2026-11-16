@@ -1,0 +1,122 @@
+{
+  "template": "BeatCutAd",
+  "name": "example-beatcutad",
+  "lang": "en",
+  "props": {
+    "clips": [
+      {
+        "src": "footage.mp4",
+        "start": 3.958,
+        "duration": 3.417
+      },
+      {
+        "src": "footage.mp4",
+        "start": 0,
+        "duration": 3.833,
+        "speed": 0.89,
+        "transition": "flash"
+      },
+      {
+        "src": "footage.mp4",
+        "start": 7.458,
+        "duration": 1.875,
+        "transition": "zoom"
+      },
+      {
+        "src": "footage.mp4",
+        "start": 9.458,
+        "duration": 1.542,
+        "transition": "whip"
+      },
+      {
+        "src": "footage.mp4",
+        "start": 11.083,
+        "duration": 2.5,
+        "transition": "focus"
+      }
+    ],
+    "hook": {
+      "lines": [
+        "A personalized gift",
+        "that lasts *ALL YEAR*"
+      ],
+      "band": "top",
+      "duration": 2.2
+    },
+    "cta": {
+      "lines": [
+        "Personalize yours"
+      ],
+      "button": "Link in bio",
+      "band": "top",
+      "duration": 2.5
+    },
+    "music": {
+      "src": "music.m4a",
+      "volume": 0.85
+    },
+    "brand": {
+      "accent": "#FFD400",
+      "font": "poppins",
+      "textStyle": "outline"
+    }
+  },
+  "i18n": {
+    "ja": {
+      "hook": {
+        "lines": [
+          "名入れできる",
+          "*一年中*楽しめるギフト"
+        ]
+      },
+      "cta": {
+        "lines": [
+          "名入れのご注文は"
+        ],
+        "button": "プロフィールのリンクから"
+      }
+    },
+    "de": {
+      "hook": {
+        "lines": [
+          "Mit euren Namen –",
+          "Freude das *GANZE JAHR*"
+        ]
+      },
+      "cta": {
+        "lines": [
+          "Jetzt personalisieren"
+        ],
+        "button": "Link in der Bio"
+      }
+    },
+    "fr": {
+      "hook": {
+        "lines": [
+          "Un cadeau personnalisé",
+          "pour *TOUTE L’ANNÉE*"
+        ]
+      },
+      "cta": {
+        "lines": [
+          "Personnalisez le vôtre"
+        ],
+        "button": "Lien en bio"
+      }
+    },
+    "es": {
+      "hook": {
+        "lines": [
+          "Un regalo personalizado",
+          "para *TODO EL AÑO*"
+        ]
+      },
+      "cta": {
+        "lines": [
+          "Personaliza el tuyo"
+        ],
+        "button": "Enlace en la bio"
+      }
+    }
+  }
+}

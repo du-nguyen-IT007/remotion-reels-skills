@@ -1,0 +1,49 @@
+{
+  "template": "SearchHook",
+  "name": "example-searchhook",
+  "props": {
+    "query": "gift for mom who has everything",
+    "suggestions": [
+      "gift for mom who has everything",
+      "gift for mom from daughter",
+      "gift for mom under $30"
+    ],
+    "pick": 0,
+    "cps": 15,
+    "background": {
+      "src": "footage.mp4",
+      "start": 0
+    },
+    "dock": 2,
+    "clips": [
+      {
+        "src": "footage.mp4",
+        "start": 7.458,
+        "duration": 1.9
+      },
+      {
+        "src": "footage.mp4",
+        "start": 9.458,
+        "duration": 1.6,
+        "transition": "whip"
+      },
+      {
+        "src": "footage.mp4",
+        "start": 11.083,
+        "duration": 3,
+        "speed": 0.8,
+        "transition": "zoom"
+      }
+    ],
+    "cta": {
+      "lines": [
+        "Found it."
+      ],
+      "button": "Personalize yours",
+      "duration": 2.4
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "template": "UgcCaptions",
+  "name": "example-ugccaptions",
+  "props": {
+    "clip": {
+      "src": "footage.mp4",
+      "start": 0,
+      "duration": 7
+    },
+    "keepAudio": false,
+    "words": [
+      {
+        "text": "Okay",
+        "start": 0.3,
+        "end": 0.62
+      },
+      {
+        "text": "I",
+        "start": 0.66,
+        "end": 0.98
+      },
+      {
+        "text": "did",
+        "start": 1.02,
+        "end": 1.34
+      },
+      {
+        "text": "not",
+        "start": 1.38,
+        "end": 1.7
+      },
+      {
+        "text": "expect",
+        "start": 1.74,
+        "end": 2.06
+      },
+      {
+        "text": "to",
+        "start": 2.2,
+        "end": 2.52
+      },
+      {
+        "text": "cry",
+        "start": 2.56,
+        "end": 2.88
+      },
+      {
+        "text": "over",
+        "start": 2.92,
+        "end": 3.24
+      },
+      {
+        "text": "an",
+        "start": 3.28,
+        "end": 3.6
+      },
+      {
+        "text": "ornament.",
+        "start": 3.64,
+        "end": 3.96
+      },
+      {
+        "text": "Look",
+        "start": 4.4,
+        "end": 4.72
+      },
+      {
+        "text": "at",
+        "start": 4.76,
+        "end": 5.08
+      },
+      {
+        "text": "the",
+        "start": 5.12,
+        "end": 5.44
+      },
+      {
+        "text": "tiny",
+        "start": 5.48,
+        "end": 5.8
+      },
+      {
+        "text": "details!",
+        "start": 5.84,
+        "end": 6.16
+      }
+    ],
+    "wordsPerPage": 3,
+    "captionBand": "lower",
+    "uppercase": true,
+    "cta": {
+      "lines": [
+        "Get yours today"
+      ],
+      "button": "Link in bio",
+      "duration": 2
+    },
+    "music": {
+      "src": "music.m4a",
+      "volume": 0.5
+    }
+  }
+}

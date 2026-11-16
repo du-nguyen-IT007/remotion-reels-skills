@@ -1,0 +1,63 @@
+{
+  "template": "ChatStory",
+  "name": "example-chatstory",
+  "props": {
+    "contact": {
+      "name": "Mom ❤️",
+      "status": "online"
+    },
+    "messages": [
+      {
+        "from": "them",
+        "text": "What do you want for Christmas?"
+      },
+      {
+        "from": "me",
+        "text": "Honestly? Nothing, I have everything 😅"
+      },
+      {
+        "from": "them",
+        "text": "Too late. I already ordered this"
+      },
+      {
+        "from": "them",
+        "image": "demo/photo-12.jpg"
+      },
+      {
+        "from": "me",
+        "text": "MOM. Is that OUR van?? 😭😭"
+      }
+    ],
+    "theme": "light",
+    "bubbleColor": "#0A84FF",
+    "background": {
+      "src": "footage.mp4",
+      "start": 7.458
+    },
+    "hold": 1.4,
+    "clips": [
+      {
+        "src": "footage.mp4",
+        "start": 9.458,
+        "duration": 1.6
+      },
+      {
+        "src": "footage.mp4",
+        "start": 11.083,
+        "duration": 3.2,
+        "speed": 0.75,
+        "transition": "zoom"
+      }
+    ],
+    "cta": {
+      "lines": [
+        "Make them *cry happy tears*"
+      ],
+      "button": "Personalize yours",
+      "duration": 2.4
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "template": "Testimonial",
+  "name": "example-testimonial",
+  "props": {
+    "background": {
+      "src": "footage.mp4",
+      "start": 7.458
+    },
+    "dim": 0.45,
+    "summary": "*4.9 / 5* from 2,000+ families",
+    "reviews": [
+      {
+        "quote": "My mom cried when she opened it. Best gift I have ever given.",
+        "author": "Hannah R.",
+        "stars": 5,
+        "duration": 3
+      },
+      {
+        "quote": "The details are unreal. It looks exactly like our camper van.",
+        "author": "Marcus T.",
+        "stars": 5,
+        "duration": 3
+      }
+    ],
+    "cta": {
+      "lines": [
+        "Make their Christmas"
+      ],
+      "button": "Personalize now",
+      "band": "middle",
+      "duration": 2.4
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

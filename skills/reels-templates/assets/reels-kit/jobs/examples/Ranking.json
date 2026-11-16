@@ -1,0 +1,51 @@
+{
+  "template": "Ranking",
+  "name": "example-ranking",
+  "props": {
+    "title": "Ranking gifts I gave mom",
+    "items": [
+      {
+        "clip": {
+          "src": "footage.mp4",
+          "start": 0,
+          "duration": 2.4
+        },
+        "label": "Scented candle",
+        "rank": 3
+      },
+      {
+        "clip": {
+          "src": "footage.mp4",
+          "start": 7.458,
+          "duration": 2.4,
+          "speed": 0.75,
+          "transition": "whip"
+        },
+        "label": "Photo book",
+        "rank": 2
+      },
+      {
+        "clip": {
+          "src": "footage.mp4",
+          "start": 11.083,
+          "duration": 4.4,
+          "speed": 0.56,
+          "transition": "flash"
+        },
+        "label": "Our custom ornament",
+        "rank": 1
+      }
+    ],
+    "placeAfter": 0.7,
+    "cta": {
+      "lines": [
+        "Get the *#1*"
+      ],
+      "button": "Link in bio",
+      "duration": 2
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

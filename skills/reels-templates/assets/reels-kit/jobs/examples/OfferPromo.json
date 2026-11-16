@@ -1,0 +1,43 @@
+{
+  "template": "OfferPromo",
+  "name": "example-offerpromo",
+  "props": {
+    "clips": [
+      {
+        "src": "footage.mp4",
+        "start": 7.458,
+        "duration": 2.4,
+        "speed": 0.75
+      },
+      {
+        "src": "footage.mp4",
+        "start": 9.458,
+        "duration": 2.2,
+        "speed": 0.7,
+        "transition": "flash"
+      },
+      {
+        "src": "footage.mp4",
+        "start": 11.083,
+        "duration": 3.4,
+        "speed": 0.7,
+        "transition": "zoom"
+      }
+    ],
+    "headline": "BLACK FRIDAY",
+    "offer": "-40%",
+    "sub": "Code: XMAS40",
+    "deadline": "Ends Sunday midnight",
+    "dim": 0.35,
+    "cta": {
+      "lines": [
+        "Personalize yours"
+      ],
+      "button": "Shop the sale",
+      "duration": 2.4
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

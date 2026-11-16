@@ -1,0 +1,41 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Local workspace created from skills/reels-templates/assets/reels-kit:
+# media, jobs, stills and rendered videos stay on this machine.
+reels/
+
+# Inside the kit, in case it is run in place
+skills/reels-templates/assets/reels-kit/public/
+skills/reels-templates/assets/reels-kit/out/
+skills/reels-templates/assets/reels-kit/exports/
+skills/reels-templates/assets/reels-kit/jobs/_local/
+skills/reels-templates/assets/reels-kit/clean.log
+
+# Third-party skills installed locally; not redistributable
+skills/remotion-best-practices/
+
+# Media never goes into git
+*.mp4
+*.mov
+*.m4v
+*.webm
+*.mkv
+*.m4a
+*.mp3
+*.wav
+*.aac
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.heic
+
+# Secrets
+.env
+.env.*

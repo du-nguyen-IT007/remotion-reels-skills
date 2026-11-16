@@ -1,0 +1,70 @@
+{
+  "template": "NotificationStack",
+  "name": "example-notificationstack",
+  "props": {
+    "clock": "9:41",
+    "date": "Friday, December 12",
+    "now": "now",
+    "notifications": [
+      {
+        "app": "Shop",
+        "title": "Your order is on its way 📦",
+        "text": "Custom ornament · arrives Thursday",
+        "icon": "🛍️",
+        "color": "#FFD400"
+      },
+      {
+        "app": "Messages",
+        "title": "Mom",
+        "text": "It came!! I am literally crying 😭",
+        "icon": "💬",
+        "color": "#34C759"
+      },
+      {
+        "app": "Messages",
+        "title": "Dad",
+        "text": "Ok where did you get this. I need one for grandma",
+        "icon": "💬",
+        "color": "#34C759"
+      },
+      {
+        "app": "Shop",
+        "title": "12 people ordered in the last hour",
+        "text": "Order by Dec 15 for Christmas delivery",
+        "icon": "🔥",
+        "color": "#FF6B35"
+      }
+    ],
+    "every": 1.1,
+    "background": {
+      "src": "footage.mp4",
+      "start": 11.083
+    },
+    "blur": 12,
+    "hold": 1.6,
+    "clips": [
+      {
+        "src": "footage.mp4",
+        "start": 9.458,
+        "duration": 1.6
+      },
+      {
+        "src": "footage.mp4",
+        "start": 11.083,
+        "duration": 3.2,
+        "speed": 0.75,
+        "transition": "zoom"
+      }
+    ],
+    "cta": {
+      "lines": [
+        "Be the favorite child"
+      ],
+      "button": "Order today",
+      "duration": 2.4
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

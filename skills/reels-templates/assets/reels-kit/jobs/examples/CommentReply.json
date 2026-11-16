@@ -1,0 +1,49 @@
+{
+  "template": "CommentReply",
+  "name": "example-commentreply",
+  "props": {
+    "comment": {
+      "user": "@jess.marie",
+      "text": "Is it really custom or just a sticker??",
+      "label": "Replying to @jess.marie"
+    },
+    "clips": [
+      {
+        "src": "footage.mp4",
+        "start": 7.458,
+        "duration": 3,
+        "speed": 0.62
+      },
+      {
+        "src": "footage.mp4",
+        "start": 11.083,
+        "duration": 5,
+        "speed": 0.5,
+        "transition": "zoom"
+      }
+    ],
+    "answers": [
+      {
+        "text": "Every one is *painted by hand*",
+        "start": 1.2,
+        "end": 3
+      },
+      {
+        "text": "Your names, your van,\nyour *year*",
+        "start": 3.2,
+        "end": 5.6
+      }
+    ],
+    "answerBand": "lower",
+    "cta": {
+      "lines": [
+        "See for yourself"
+      ],
+      "button": "Link in bio",
+      "duration": 2.2
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

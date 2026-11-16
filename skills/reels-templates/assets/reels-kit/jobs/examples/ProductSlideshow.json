@@ -1,0 +1,43 @@
+{
+  "template": "ProductSlideshow",
+  "name": "example-productslideshow",
+  "props": {
+    "slides": [
+      {
+        "src": "demo/photo-8.2.jpg",
+        "caption": "Hand-painted ornaments"
+      },
+      {
+        "src": "demo/photo-10.jpg",
+        "caption": "Your names, your year"
+      },
+      {
+        "src": "demo/photo-5.jpg",
+        "caption": "Wrapped and ready to gift"
+      },
+      {
+        "src": "demo/photo-12.jpg",
+        "duration": 3.2
+      }
+    ],
+    "captionBand": "lower",
+    "badge": "-30%\nTODAY",
+    "badgeBand": "middle",
+    "hook": {
+      "lines": [
+        "The gift they *keep*"
+      ],
+      "duration": 2
+    },
+    "cta": {
+      "lines": [
+        "Order by Dec 15"
+      ],
+      "button": "Shop now",
+      "band": "top"
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

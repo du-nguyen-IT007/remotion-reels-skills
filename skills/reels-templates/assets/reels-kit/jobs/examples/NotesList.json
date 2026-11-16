@@ -1,0 +1,54 @@
+{
+  "template": "NotesList",
+  "name": "example-noteslist",
+  "props": {
+    "title": "Gifts mom actually kept 🎁",
+    "date": "December 12, 2026 at 9:41 AM",
+    "items": [
+      {
+        "text": "Scented candle (regifted)"
+      },
+      {
+        "text": "Fuzzy socks (lost one)"
+      },
+      {
+        "text": "Another mug (cupboard is full)"
+      },
+      {
+        "text": "The ornament with our names",
+        "check": true,
+        "highlight": true
+      }
+    ],
+    "cps": 26,
+    "background": {
+      "src": "footage.mp4",
+      "start": 7.458
+    },
+    "hold": 1.2,
+    "clips": [
+      {
+        "src": "footage.mp4",
+        "start": 9.458,
+        "duration": 1.6
+      },
+      {
+        "src": "footage.mp4",
+        "start": 11.083,
+        "duration": 3.2,
+        "speed": 0.75,
+        "transition": "zoom"
+      }
+    ],
+    "cta": {
+      "lines": [
+        "The one she *keeps*"
+      ],
+      "button": "Shop now",
+      "duration": 2.4
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}

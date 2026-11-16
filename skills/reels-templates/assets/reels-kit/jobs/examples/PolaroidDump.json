@@ -1,0 +1,43 @@
+{
+  "template": "PolaroidDump",
+  "name": "example-polaroiddump",
+  "props": {
+    "title": "december dump 🎄",
+    "photos": [
+      {
+        "src": "demo/photo-1.jpg",
+        "caption": "she had no idea"
+      },
+      {
+        "src": "demo/photo-5.jpg",
+        "caption": "opening it..."
+      },
+      {
+        "src": "demo/photo-8.2.jpg",
+        "caption": "every trip we took"
+      },
+      {
+        "src": "demo/photo-10.jpg",
+        "caption": "on the tree forever"
+      },
+      {
+        "src": "demo/photo-12.jpg",
+        "caption": "our van!!"
+      }
+    ],
+    "every": 0.8,
+    "paper": "#EFE6D8",
+    "hold": 1.2,
+    "cta": {
+      "lines": [
+        "Make your own memory"
+      ],
+      "button": "Link in bio",
+      "band": "top",
+      "duration": 2.2
+    },
+    "music": {
+      "src": "music.m4a"
+    }
+  }
+}
