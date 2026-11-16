@@ -12,7 +12,7 @@ This repo is an Agent Skills package for making 9:16 Reels / TikTok videos with 
 
 ## Which task you are doing
 
-- **Making a video** ("dựng video", "làm reels"): follow `skills/reels-templates/SKILL.md`. Work in `reels/` and create it from the kit if it is missing. Do not change files under `skills/` for a single job.
+- **Making a video** ("make a reel", "render this ad"): follow `skills/reels-templates/SKILL.md`. Work in `reels/` and create it from the kit if it is missing. Do not change files under `skills/` for a single job.
 - **Maintaining the skills** (a template, the kit, a skill's instructions): edit under `skills/`. The rules below apply.
 
 ## Rules for editing skills

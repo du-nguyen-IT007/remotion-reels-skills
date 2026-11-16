@@ -1,6 +1,6 @@
 ---
 name: reels-templates
-description: 'One-shot a 9:16 Reels / TikTok ad from footage, photos or a brief using fifteen ready-made Remotion templates bundled with this skill: social-native formats (text-message story, notes-app list, search bar, lock-screen notifications, polaroid photo dump, blind ranking, poll sticker) and ad formats (beat-cut montage, UGC with word captions, listicle, before/after, product slideshow, testimonials, comment reply, sale promo). Use when the user asks to make, dựng, edit or render a short vertical video or ad ("dựng video", "làm reels", "tạo video quảng cáo", "oneshot video", "render đa ngôn ngữ"), or to add a new template to the set.'
+description: 'One-shot a 9:16 Reels / TikTok ad from footage, photos or a brief using fifteen ready-made Remotion templates bundled with this skill: social-native formats (text-message story, notes-app list, search bar, lock-screen notifications, polaroid photo dump, blind ranking, poll sticker) and ad formats (beat-cut montage, UGC with word captions, listicle, before/after, product slideshow, testimonials, comment reply, sale promo). Use when the user asks, in any language, to make, edit or render a short vertical video or ad ("make a reel", "TikTok ad from this footage", "one-shot video", "render it in several languages"), or to add a new template to the set.'
 ---
 
 # Reels templates
