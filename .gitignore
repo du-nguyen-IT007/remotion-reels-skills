@@ -15,6 +15,7 @@ skills/reels-templates/assets/reels-kit/out/
 skills/reels-templates/assets/reels-kit/exports/
 skills/reels-templates/assets/reels-kit/jobs/_local/
 skills/reels-templates/assets/reels-kit/clean.log
+skills/reels-templates/assets/reels-kit/.whisper/
 
 # Third-party skills installed locally; not redistributable
 skills/remotion-best-practices/

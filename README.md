@@ -76,6 +76,20 @@ Requirements:
 - `ffmpeg` and `ffprobe`
 - Network access while rendering (for Google Fonts)
 
+### Footage tools
+
+Raw footage rarely arrives ready to cut. `reels/footage.mjs` gives the agent the measurements it needs, using only local tools (ffmpeg and whisper.cpp, no cloud service or paid editor):
+
+| Command | What it does |
+| --- | --- |
+| `scan` | Probes a folder of media, finds shot boundaries and the parts with sound, and draws a labelled contact sheet per video for the agent to look at. |
+| `transcribe`, `find`, `words` | Word-level transcripts, a search for where a line is said, and captions timed to a clip. |
+| `cut` | Removes pauses from talking footage (jump cut) and keeps the transcript in sync. |
+| `frames`, `reframe` | Frames with a percent grid, and the crop that keeps a subject in 9:16 when the footage is landscape. |
+| `beats` | Tempo and beat times, so cuts land on the music. |
+
+The scripts measure and the agent decides: it reads the contact sheets and frames with its own vision, then writes the job file. [references/footage.md](skills/reels-templates/references/footage.md) has the workflows. Transcription builds whisper.cpp on first use, which needs `git`, `make`, `cmake` and a C compiler.
+
 The skill is written for agents that run unattended, with no human approving each step. The agent stops only on a problem it cannot resolve itself (a missing tool, missing media, a render that keeps failing). Every job ends with a report: output paths, the defaults it used, the source of each input file, and what was cleaned up and how much space was freed.
 
 ### Disk space
@@ -94,7 +108,9 @@ It never touches the current job, jobs changed in the last 24 hours, job files (
 skills/
   reels-templates/
     SKILL.md              instructions for the agent
+    references/           footage workflows, loaded when needed
     assets/reels-kit/     Remotion starter project; the agent copies it to reels/
+                          (render.mjs, footage.mjs, clean.mjs, templates, example jobs)
 ```
 
 `.claude/skills` and `.agents/skills` are symlinks to `skills/`, so Claude Code, Codex and Gemini CLI load the skills when opened in this repo. `reels/` is a local workspace and is not tracked by git.

@@ -5,7 +5,8 @@ This repo is an Agent Skills package for making 9:16 Reels / TikTok videos with 
 ## Layout
 
 - `skills/reels-templates/SKILL.md`: the main skill. It tells an agent how to make a video from one of fifteen templates.
-- `skills/reels-templates/assets/reels-kit/`: the Remotion project that skill copies into a user's folder as `reels/`. It holds `render.mjs`, `src/lib/kit.tsx` (shared kit), `src/templates/*.tsx`, `src/Root.tsx` (registration) and `jobs/examples/<Template>.json` (one example job per template, also used as default props).
+- `skills/reels-templates/assets/reels-kit/`: the Remotion project that skill copies into a user's folder as `reels/`. It holds `render.mjs`, `footage.mjs` (footage tools: scan, transcribe, cut, reframe, beats), `clean.mjs`, `src/lib/kit.tsx` (shared kit), `src/templates/*.tsx`, `src/Root.tsx` (registration) and `jobs/examples/<Template>.json` (one example job per template, also used as default props).
+- `skills/reels-templates/references/footage.md`: how an agent uses `footage.mjs` (shot search, script to timeline, pause removal, captions, reframing, beat cuts). SKILL.md links to it.
 - `skills/remotion-best-practices/` (git-ignored, optional): the official Remotion skill, installed locally with `npx skills add remotion-dev/skills --skill remotion-best-practices`. It is not part of this repo.
 - `.claude/skills` (Claude Code) and `.agents/skills` (Codex, Gemini CLI and others) are symlinks to `skills/`. Agents opened in this repo load the skills directly, and edits under `skills/` take effect at once. Do not replace a symlink with a copy.
 - `reels/` is a local, git-ignored workspace made from the kit. It holds media, scratch jobs, stills and renders. It does not exist in a fresh clone.

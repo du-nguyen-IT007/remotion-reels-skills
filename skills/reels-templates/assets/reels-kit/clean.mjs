@@ -159,3 +159,5 @@ for (const [dir, label] of [[PUBLIC, "public/"], [EXPORTS, "exports/"]]) {
   }
 }
 console.log(`  total in job folders ${mb(rows.reduce((n, r) => n + r.i + r.o, 0))}`);
+const whisper = path.join(root, ".whisper");
+if (existsSync(whisper)) console.log(`  kept: .whisper/ ${mb(scan(whisper).bytes)} (transcription engine, never removed)`);

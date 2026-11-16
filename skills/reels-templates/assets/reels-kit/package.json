@@ -12,6 +12,7 @@
     "@remotion/bundler": "4.0.543",
     "@remotion/cli": "^4.0.543",
     "@remotion/google-fonts": "^4.0.543",
+    "@remotion/install-whisper-cpp": "4.0.543",
     "@remotion/layout-utils": "4.0.543",
     "@remotion/renderer": "4.0.543",
     "react": "^19.3.1",

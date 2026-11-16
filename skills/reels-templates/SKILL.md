@@ -1,6 +1,6 @@
 ---
 name: reels-templates
-description: 'One-shot a 9:16 Reels / TikTok ad from footage, photos or a brief using fifteen ready-made Remotion templates bundled with this skill: social-native formats (text-message story, notes-app list, search bar, lock-screen notifications, polaroid photo dump, blind ranking, poll sticker) and ad formats (beat-cut montage, UGC with word captions, listicle, before/after, product slideshow, testimonials, comment reply, sale promo). Use when the user asks, in any language, to make, edit or render a short vertical video or ad ("make a reel", "TikTok ad from this footage", "one-shot video", "render it in several languages"), or to add a new template to the set.'
+description: 'One-shot a 9:16 Reels / TikTok ad from footage, photos or a brief using fifteen ready-made Remotion templates bundled with this skill: social-native formats (text-message story, notes-app list, search bar, lock-screen notifications, polaroid photo dump, blind ranking, poll sticker) and ad formats (beat-cut montage, UGC with word captions, listicle, before/after, product slideshow, testimonials, comment reply, sale promo). It also reads raw footage with local tools: contact sheets and shot search, word-level transcription, silence removal, 9:16 reframing of wide footage and beat detection. Use when the user asks, in any language, to make, edit or render a short vertical video or ad ("make a reel", "TikTok ad from this footage", "one-shot video", "render it in several languages"), or to add a new template to the set.'
 ---
 
 # Reels templates
@@ -18,9 +18,11 @@ Do this once per project, before the first job.
 1. Check the tools: Node.js 18 or newer (`node -v`), and `ffmpeg` and `ffprobe` on the PATH. If one is missing, stop and report it as a blocker. Do not install system software yourself.
 2. If the working folder already has `reels/render.mjs`, use that workspace and skip to section 1.
 3. Otherwise copy this skill's `assets/reels-kit/` folder to `reels/` in the working folder (for example `cp -R <skill-dir>/assets/reels-kit reels`), then run `npm install` inside `reels/`.
-4. Make the folders `reels/public/` (media) and `reels/jobs/_local/` (scratch jobs). If the working folder is a git repo, add `reels/node_modules/`, `reels/public/`, `reels/out/`, `reels/exports/` and `reels/jobs/_local/` to its `.gitignore`.
+4. Make the folders `reels/public/` (media) and `reels/jobs/_local/` (scratch jobs). If the working folder is a git repo, add `reels/node_modules/`, `reels/public/`, `reels/out/`, `reels/exports/`, `reels/jobs/_local/` and `reels/.whisper/` to its `.gitignore`.
 
-The workspace has `render.mjs` (renders a job), `clean.mjs` (frees disk space, see section 6), `src/` (templates and the shared kit), `jobs/examples/` (one example job per template), `public/<name>/` (each job's input media), `out/stills/` (QA stills) and `exports/<name>/` (each job's finished videos).
+An older workspace may lack `footage.mjs` or `clean.mjs`. Copy them, and `package.json` and `package-lock.json`, from this skill's `assets/reels-kit/` into `reels/`, then run `npm install` there.
+
+The workspace has `render.mjs` (renders a job), `footage.mjs` (reads raw footage, see [references/footage.md](references/footage.md)), `clean.mjs` (frees disk space, see section 6), `src/` (templates and the shared kit), `jobs/examples/` (one example job per template), `public/<name>/` (each job's input media), `out/stills/` (QA stills) and `exports/<name>/` (each job's finished videos).
 
 ## Preferences
 
@@ -62,7 +64,7 @@ The official Remotion skill (`remotion-best-practices`, installed separately wit
 ## 2. Build the job
 
 1. Choose the job name (lowercase, digits and `-`, for example `xmas-ornament`). It is the job file's `name`, the input folder `reels/public/<name>/` and the output folder `reels/exports/<name>/`. Copy only the files this job uses into `reels/public/<name>/`, and leave the originals where they are. Note in the report where each input came from, and whether the copy in `public/` is the only one (downloaded or generated files). Write each `src` as `<name>/<file>`. Run `ffprobe` on each file for its length. Media is never committed: `public/` is git-ignored, so the paths in the example jobs (`footage.mp4`, `music.m4a`, `demo/…`) are placeholders until you put your own files there.
-2. Look at the footage before placing text: extract a frame per shot (`ffmpeg -ss <t> -i <file> -frames:v 1`) and note where the product sits.
+2. Look at the footage before placing text. Run `node footage.mjs scan <files or folder> --job=<name>` and open the contact sheets it lists. Each sheet has one tile per shot, labelled with its time. Note each shot's range and where the product sits. [references/footage.md](references/footage.md) covers the rest: finding shots in a large folder, building from a script, removing pauses, word captions, reframing wide footage for 9:16, and cutting on the beat.
 3. Read `reels/jobs/examples/<Template>.json`. It lists every prop that template takes. Copy it to `reels/jobs/<job>.json` and edit. Use `reels/jobs/_local/` for a job that should stay out of git.
 
 Job file:
@@ -95,7 +97,7 @@ A prop the job leaves out is off: a job without `hook` has no hook, whatever the
 - **Keep text off the product** unless the brief wants it there. Choose each band from the frames you extracted. If every band covers the product in a shot, shorten the text's `duration` or change the shot.
 - **Short lines.** Text shrinks to fit 800 px, so a long line gets small. Aim for 22 Latin characters or 12 Japanese characters a line. Wrap one word in `*asterisks*` to colour it with the accent.
 - **Clip lengths.** `start + duration * speed` must not pass the end of the source. The video's length is the sum of the clip durations (`BeforeAfter` uses `duration`; `Testimonial` is the reviews plus the CTA).
-- **Cut on the beat** when there is music: make clip durations add up to beat positions.
+- **Cut on the beat** when there is music: make clip durations add up to beat times from `node footage.mjs beats <music> --job=<name>`.
 - **Fonts.** Latin, Vietnamese (montserrat or anton, and all interface cards) and Japanese work. Korean, Thai, Arabic and others need a font added in `reels/src/lib/kit.tsx` first.
 
 **Few static clips, many angles.** When the footage is one or two locked-off shots and the brief is a fast multi-angle edit (a showroom-tour or trend-dance cut), use `BeatCutAd` and reuse each source several times with a different `focus`, `zoom`, `tilt` and `push`: open on a wide shot (`zoom` about 1.02), then one detail per beat (text, character, name, hands, hem), alternate the sign of `tilt`, keep `zoom` at 1.7 or less on 768 px sources, and end wide. Use `cut` transitions; the push is the transition. This re-frames the footage; it cannot create a real new camera angle.
@@ -111,7 +113,7 @@ Template notes:
 - `Ranking`: `items` play in the order written, so write the lowest rank first and rank 1 last. Labels stay under 20 characters.
 - `PollSticker`: `percent` values are yours to set; use real numbers when the brief has them and never present invented ones as survey data.
 - Write the copy in these interfaces the way people text and post: lowercase is fine, short lines, an emoji where a person would use one. Names, messages and reviews in them are illustrative unless the brief supplies real ones, so do not attribute them to real people.
-- `UgcCaptions`: `words` are `{ text, start, end }` in seconds on the output timeline. Get them from a transcript with word timestamps; do not guess timings. `keepAudio` defaults to true. A "word" may be a short phrase with `wordsPerPage: 1`.
+- `UgcCaptions`: `words` are `{ text, start, end }` in seconds on the output timeline. Get them with `node footage.mjs words` (see references/footage.md); never guess timings. `keepAudio` defaults to true. A "word" may be a short phrase with `wordsPerPage: 1`.
 - `CommentReply` and `OfferPromo`: leave `hook` out. The bubble or headline already uses the top band.
 - `OfferPromo`: the CTA defaults to the lower band. `Testimonial`: set the CTA band to `middle`.
 - `ProductSlideshow`: `badge` takes `\n` for two lines; place it with `badgeBand`.
@@ -147,7 +149,7 @@ ffmpeg -i in.mp4 -c:v libx264 -crf 20 -maxrate 10M -bufsize 20M -c:a aac -ar 480
 
 ## 6. Media and disk space
 
-Media is what fills the disk. Inputs (footage, photos, music copied into `public/<name>/`) and outputs (videos in `exports/<name>/`, about 30 MB per language for 15 s) both belong to a job, under the same name. Keep it that way, because the cleanup works per job. Everything else is scratch: QA stills in `out/`, and the temporary bundles Remotion writes to the OS temp folder (each holds a full copy of `public/`; `render.mjs` deletes its own, but crashed runs and Studio leave some behind). The webpack cache in `node_modules/.cache` grows to several hundred MB. `node_modules/` (about 1.3 GB, including the headless browser) is a one-time cost. Re-rendering a job overwrites its files under the same names, so repeated renders of one job do not pile up.
+Media is what fills the disk. Inputs (footage, photos, music copied into `public/<name>/`) and outputs (videos in `exports/<name>/`, about 30 MB per language for 15 s) both belong to a job, under the same name. Keep it that way, because the cleanup works per job. Everything else is scratch: QA stills and footage scans in `out/`, and the temporary bundles Remotion writes to the OS temp folder (each holds a full copy of `public/`; `render.mjs` deletes its own, but crashed runs and Studio leave some behind). The webpack cache in `node_modules/.cache` grows to several hundred MB. `node_modules/` (about 1.3 GB, including the headless browser) and `.whisper/` (the transcription engine and model, about 0.5 to 2 GB, made on first use) are one-time costs; the cleanup never removes them. Re-rendering a job overwrites its files under the same names, so repeated renders of one job do not pile up.
 
 If `reels/clean.mjs` is missing (the workspace was made from an older kit), copy `clean.mjs` and `render.mjs` from this skill's `assets/reels-kit/` into `reels/` first.
 
