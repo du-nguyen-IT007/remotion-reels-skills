@@ -28,6 +28,22 @@ The workspace has `render.mjs` (renders a job), `footage.mjs` (reads raw footage
 
 This repo holds no one's taste. Text style, font, accent colour, tone of the copy, languages, music and which format to lead with come from the requester's brief and from what you already know about the brand, never from a value written into the templates or this file. When the brief states a preference, apply it in the job file. When it does not, use the template defaults and list them in the report. Do not write a person's or a brand's preference into the templates, the example jobs or this skill.
 
+## One-shot workflow (analyze before JSON)
+
+To go from a brief and raw files to a finished video in one unattended pass without guessing or re-rendering full videos, always run this 4-step sequence:
+
+1. **Analyze media first (run in parallel where possible):**
+   - Run `node footage.mjs scan <files or folder> --job=<name>` to get `duration`, dimensions, `fps`, `audio` presence, shot boundaries and contact sheets (`out/footage/<name>/sheets/*.jpg`).
+   - Run `node footage.mjs beats <music> --job=<name>` if using music, or `node footage.mjs words <clip> --job=<name>` if the clip has speech.
+2. **Extract the concept & layout map from the scan:**
+   - **Audio & copy density:** Does the footage have speech (`UgcCaptions`), or does the brief/platform (e.g. IG Reels / YouTube Shorts) need **continuous captions across shots** (`Listicle`, `CommentReply`, `NotesList`) rather than **hook + CTA only** (`BeatCutAd`)? Pick the template to match the caption requirement—do not force `BeatCutAd` when mid-video captions are needed.
+   - **Subject & safe-zone map:** Inspect the contact sheets before writing any JSON. For each candidate shot, note where the product, faces or key details sit (`top` y 288–600, `middle` y 600–930, `lower` y 930–1248). Pick the strongest shot for the **hook** (0–2.2 s) and **payoff** (last 2–2.5 s), and assign text to a band that stays clear of the subject (the kit already keeps all bands inside the IG Reels / YouTube Shorts safe zone `x 140–940, y 288–1248`).
+3. **Lock schema & write one JSON:**
+   - Read only the single matching `reels/jobs/examples/<Template>.json` (not all 15), align clip durations to the beat list, and verify `start + duration * speed <= source_duration` for every clip.
+   - **Motion & SFX:** Use varied transitions (`flash`, `zoom`, `whip`, `focus`) at key beat changes so `@remotion/sfx` fires automatically instead of leaving every clip as `cut`. Keep `sfx.volume` around `0.45` with music, lower to `0.25` (with `music.volume` `0.15`) under speech, or set `sfx.enabled: false` if raw audio is requested.
+   - **Unattended defaults:** Omit `cta` by default (no "Shop now" button or CTA end card) unless the brief explicitly asks for one. When the brief omits copy, brand or pacing, infer the product and visual details from the contact sheets, apply template defaults, and write `reels/jobs/<job>.json` (or `reels/jobs/_local/<job>.json`).
+4. **Gate with stills before full render:** Run `node render.mjs jobs/<job>.json --still=<hook>,<mid>,<end> --guides` first (a few seconds) and inspect the rendered frames. Only run the full `node render.mjs jobs/<job>.json` after the stills pass, then run `clean.mjs` (section 6).
+
 ## 1. Pick the template
 
 Start with the social-native set when the video should feel like something a person posted. Use the ad set when the footage itself carries the video.
@@ -80,8 +96,9 @@ Job file:
 Props every template shares:
 
 - `hook`: `{ lines (1-3), band, size, duration }`. Shown from 0 s, default 2.2 s.
-- `cta`: `{ lines, button, band, size, duration }`. Shown for the last `duration` seconds, default 2.5. Other captions end when it starts.
+- `cta`: `{ lines, button, band, size, duration }`. Optional—omit by default unless the brief explicitly requests a CTA or end card. When set, shown for the last `duration` seconds, default 2.5; other captions end when it starts.
 - `music`: `{ src, volume }`. Fades out at the end. Use about 0.15 under speech.
+- `sfx`: `{ enabled, volume }`. Transition sound effects from `@remotion/sfx` (`whip`, `whoosh`, `shutterModern`, `uiSwitch`) play automatically on clip transitions; defaults to `{ enabled: true, volume: 0.45 }`.
 - `brand`: `{ accent (hex), font: poppins | montserrat | anton, textStyle: outline | box | caption }`. `outline` (the default) and `box` are loud ad styles. `caption` is the native in-app caption look: white sentence-case text in one dark rounded box, at the top of its band, fading in; write it as a first-person story line, 2 lines of up to 30 characters.
 - A clip: `{ src, start (s into the source), duration (s on screen), speed, focus (center | top | bottom | "50% 30%"), transition (cut | flash | zoom | whip | focus) }`. `transition` is how that clip arrives.
 

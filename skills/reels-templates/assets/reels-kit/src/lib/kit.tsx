@@ -13,6 +13,7 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { fitText } from "@remotion/layout-utils";
+import { shutterModern, uiSwitch, whip, whoosh } from "@remotion/sfx";
 import { z } from "zod";
 import { loadFont as loadPoppins } from "@remotion/google-fonts/Poppins";
 import { loadFont as loadMontserrat } from "@remotion/google-fonts/Montserrat";
@@ -59,6 +60,7 @@ export const common = {
   hook: textSchema.optional(),
   cta: ctaSchema.optional(),
   music: z.object({ src: z.string(), volume: z.number().optional() }).optional(),
+  sfx: z.object({ enabled: z.boolean().optional(), volume: z.number().min(0).max(1).optional() }).optional(),
   brand: z
     .object({
       accent: z.string().optional(),
@@ -113,6 +115,10 @@ function useFontsReady(p: unknown) {
 type Brand = { accent: string; family: string; bold: number; regular: number; textStyle: "outline" | "box" | "caption" };
 const BrandCtx = createContext<Brand>({ accent: "#FFD400", family: "sans-serif", bold: 700, regular: 500, textStyle: "outline" });
 export const useBrand = () => useContext(BrandCtx);
+
+type SfxCfg = { enabled: boolean; volume: number };
+const SfxCtx = createContext<SfxCfg>({ enabled: true, volume: 0.45 });
+export const useSfx = () => useContext(SfxCtx);
 
 // ---------- animation helpers ----------
 
@@ -349,9 +355,17 @@ function camera(lf: number, dur: number, c: Clip) {
   return { scale, angle, origin: `${fx * 100}% ${fy * 100}%`, blur: push > 0 ? tween(lf, 0, sec(0.16), 26 * push, 0) : 0 };
 }
 
+const TRANSITION_SFX: Partial<Record<Transition, string>> = {
+  whip,
+  zoom: whoosh,
+  flash: shutterModern,
+  focus: uiSwitch,
+};
+
 // Clips played back to back. `transition` on a clip is how that clip arrives (ignored on the first).
 export const ClipSeries: React.FC<{ clips: Clip[]; muted?: boolean; volume?: number; lead?: Transition }> = ({ clips, muted = true, volume, lead = "cut" }) => {
   const f = useCurrentFrame();
+  const sfx = useSfx();
   const lay = layout(clips);
   // `lead` is how the first clip arrives, for a series that starts after something else.
   const tin = (i: number): Transition => (i === 0 ? lead : (clips[i].transition ?? "cut"));
@@ -386,6 +400,17 @@ export const ClipSeries: React.FC<{ clips: Clip[]; muted?: boolean; volume?: num
         );
       })}
       <AbsoluteFill style={{ backgroundColor: "#fff", opacity: flash }} />
+      {sfx.enabled
+        ? clips.map((_, i) => {
+            const sfxSrc = TRANSITION_SFX[tin(i)];
+            if (!sfxSrc) return null;
+            return (
+              <Sequence key={`sfx-${i}`} from={Math.max(0, lay[i].from - 4)} durationInFrames={sec(1.2)}>
+                <Audio src={sfxSrc} volume={sfx.volume} />
+              </Sequence>
+            );
+          })
+        : null}
     </>
   );
 };
@@ -566,20 +591,23 @@ export const Stage: React.FC<React.PropsWithChildren<{ p: Common; total: number 
     textStyle: p.brand?.textStyle ?? "outline",
   };
   const vol = p.music?.volume ?? 0.85;
+  const sfx: SfxCfg = { enabled: p.sfx?.enabled ?? true, volume: p.sfx?.volume ?? 0.45 };
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       <BrandCtx.Provider value={brand}>
-        {ready ? (
-          <>
-            {children}
-            {p.hook ? <Hook hook={p.hook} /> : null}
-            {p.cta ? <Cta cta={p.cta} from={ctaStart(p, total)} dur={ctaFrames(p)} /> : null}
-          </>
-        ) : null}
-        {p.music ? (
-          <Audio src={url(p.music.src)} volume={(af) => vol * interpolate(af, [total - sec(0.6), total], [1, 0], clamp)} />
-        ) : null}
-        {p._guides ? <Guides /> : null}
+        <SfxCtx.Provider value={sfx}>
+          {ready ? (
+            <>
+              {children}
+              {p.hook ? <Hook hook={p.hook} /> : null}
+              {p.cta ? <Cta cta={p.cta} from={ctaStart(p, total)} dur={ctaFrames(p)} /> : null}
+            </>
+          ) : null}
+          {p.music ? (
+            <Audio src={url(p.music.src)} volume={(af) => vol * interpolate(af, [total - sec(0.6), total], [1, 0], clamp)} />
+          ) : null}
+          {p._guides ? <Guides /> : null}
+        </SfxCtx.Provider>
       </BrandCtx.Provider>
     </AbsoluteFill>
   );
