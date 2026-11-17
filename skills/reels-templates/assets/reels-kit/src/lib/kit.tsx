@@ -21,6 +21,7 @@ import { loadFont as loadAnton } from "@remotion/google-fonts/Anton";
 import { loadFont as loadInter } from "@remotion/google-fonts/Inter";
 import { loadFont as loadCaveat } from "@remotion/google-fonts/Caveat";
 import { loadFont as loadNotoJP } from "@remotion/google-fonts/NotoSansJP";
+import { loadFont as loadNotoSC } from "@remotion/google-fonts/NotoSansSC";
 
 // Shared kit for every template: canvas, safe zone, fonts, text, media, transitions, hook, CTA.
 // All text is placed inside the TikTok + Reels ads safe box: x 140-940, y 288-1248.
@@ -92,8 +93,8 @@ const FONTS = {
 // Interface font for the social-native cards (chat, notes, search, notifications) and a handwriting font.
 const inter = loadInter("normal", { weights: ["400", "600", "700"], subsets: ["latin", "latin-ext", "vietnamese"] });
 const caveat = loadCaveat("normal", { weights: ["700"], subsets: ["latin", "latin-ext"] });
-export const UI_FONT = `${inter.fontFamily}, "Noto Sans JP", sans-serif`;
-export const HAND_FONT = `${caveat.fontFamily}, "Noto Sans JP", cursive`;
+export const UI_FONT = `${inter.fontFamily}, "Noto Sans JP", "Noto Sans SC", sans-serif`;
+export const HAND_FONT = `${caveat.fontFamily}, "Noto Sans JP", "Noto Sans SC", cursive`;
 const CJK = /[぀-ヿ㐀-鿿＀-￯]/;
 export const isCJK = (s: string) => CJK.test(s);
 
@@ -102,8 +103,11 @@ function useFontsReady(p: unknown) {
   const [handle] = useState(() => delayRender("Loading fonts"));
   useEffect(() => {
     const waits = [...Object.values(FONTS), inter, caveat].map((f) => f.waitUntilDone());
-    // Noto Sans JP is about 120 requests, so it loads only when the copy needs it.
-    if (isCJK(JSON.stringify(p))) waits.push(loadNotoJP("normal", { weights: ["700"] }).waitUntilDone());
+    // Noto Sans JP / SC are ~120 requests each, so load them only when CJK copy is present.
+    if (isCJK(JSON.stringify(p))) {
+      waits.push(loadNotoJP("normal", { weights: ["700"] }).waitUntilDone());
+      waits.push(loadNotoSC("normal", { weights: ["700"] }).waitUntilDone());
+    }
     Promise.all(waits).then(() => {
       setReady(true);
       continueRender(handle);
@@ -585,7 +589,7 @@ export const Stage: React.FC<React.PropsWithChildren<{ p: Common; total: number 
   const font = FONTS[p.brand?.font ?? "poppins"];
   const brand: Brand = {
     accent: p.brand?.accent ?? "#FFD400",
-    family: `${font.fontFamily}, "Noto Sans JP", sans-serif`,
+    family: `${font.fontFamily}, "Noto Sans JP", "Noto Sans SC", sans-serif`,
     bold: font.bold,
     regular: font.regular,
     textStyle: p.brand?.textStyle ?? "outline",

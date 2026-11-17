@@ -1,5 +1,5 @@
 import React from "react";
-import { Composition } from "remotion";
+import { Composition, Folder } from "remotion";
 import { FPS, H, W } from "./lib/kit";
 import * as BeatCutAd from "./templates/BeatCutAd";
 import * as UgcCaptions from "./templates/UgcCaptions";
@@ -53,6 +53,52 @@ const TEMPLATES: Record<string, [Template, { props: unknown }]> = {
   PollSticker: [PollSticker, exPollSticker],
 };
 
+type JobFile = { template?: string; name?: string; props?: Record<string, unknown>; i18n?: Record<string, Record<string, unknown>> };
+declare const require: {
+  context: (path: string, deep?: boolean, filter?: RegExp) => { keys: () => string[]; <T>(id: string): T };
+};
+
+const isObj = (v: unknown): v is Record<string, unknown> => Boolean(v && typeof v === "object" && !Array.isArray(v));
+const mergeProps = (base: unknown, over: unknown): unknown => {
+  if (over === undefined || over === null) return base;
+  if (isObj(base) && isObj(over)) {
+    const out: Record<string, unknown> = { ...base };
+    for (const k of Object.keys(over)) out[k] = mergeProps(base[k], over[k]);
+    return out;
+  }
+  if (Array.isArray(base) && Array.isArray(over) && over.some(isObj)) {
+    return base.map((b, i) => mergeProps(b, over[i])).concat(over.slice(base.length));
+  }
+  return over;
+};
+
+const loadJobs = () => {
+  const ctx = require.context("../jobs", true, /\.json$/);
+  const seen = new Set<string>();
+  const out: { id: string; t: Template; props: Record<string, unknown> }[] = [];
+  const push = (id: string, t: Template, props: Record<string, unknown>) => {
+    if (seen.has(id)) return;
+    seen.add(id);
+    out.push({ id, t, props });
+  };
+  for (const key of ctx.keys()) {
+    if (key.startsWith("./examples/")) continue;
+    const job = ctx<JobFile>(key);
+    if (!job?.template || !job?.name || !job?.props) continue;
+    const entry = TEMPLATES[job.template];
+    if (!entry) continue;
+    const baseId = TEMPLATES[job.name] ? `job-${job.name}` : job.name;
+    push(baseId, entry[0], job.props);
+    for (const [lang, over] of Object.entries(job.i18n ?? {})) {
+      const merged = mergeProps(job.props, over);
+      if (isObj(merged)) push(`${baseId}-${lang}`, entry[0], merged);
+    }
+  }
+  return out;
+};
+
+const JOBS = loadJobs();
+
 export const Root: React.FC = () => (
   <>
     {Object.entries(TEMPLATES).map(([id, [t, example]]) => (
@@ -74,5 +120,23 @@ export const Root: React.FC = () => (
         }}
       />
     ))}
+    {JOBS.length > 0 ? (
+      <Folder name="Jobs">
+        {JOBS.map(({ id, t, props }) => (
+          <Composition
+            key={id}
+            id={id}
+            component={t.Comp}
+            schema={t.schema}
+            width={W}
+            height={H}
+            fps={FPS}
+            durationInFrames={300}
+            defaultProps={props}
+            calculateMetadata={({ props: p }) => ({ durationInFrames: t.duration(p), props: p })}
+          />
+        ))}
+      </Folder>
+    ) : null}
   </>
 );

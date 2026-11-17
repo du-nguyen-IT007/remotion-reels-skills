@@ -115,7 +115,7 @@ A prop the job leaves out is off: a job without `hook` has no hook, whatever the
 - **Short lines.** Text shrinks to fit 800 px, so a long line gets small. Aim for 22 Latin characters or 12 Japanese characters a line. Wrap one word in `*asterisks*` to colour it with the accent.
 - **Clip lengths.** `start + duration * speed` must not pass the end of the source. The video's length is the sum of the clip durations (`BeforeAfter` uses `duration`; `Testimonial` is the reviews plus the CTA).
 - **Cut on the beat** when there is music: make clip durations add up to beat times from `node footage.mjs beats <music> --job=<name>`.
-- **Fonts.** Latin, Vietnamese (montserrat or anton, and all interface cards) and Japanese work. Korean, Thai, Arabic and others need a font added in `reels/src/lib/kit.tsx` first.
+- **Fonts.** Latin, Vietnamese (`montserrat` or `anton`, and all interface cards), Japanese (`Noto Sans JP`) and Simplified Chinese (`Noto Sans SC`) work. Korean, Thai, Arabic and others need a font added in `reels/src/lib/kit.tsx` first.
 
 **Few static clips, many angles.** When the footage is one or two locked-off shots and the brief is a fast multi-angle edit (a showroom-tour or trend-dance cut), use `BeatCutAd` and reuse each source several times with a different `focus`, `zoom`, `tilt` and `push`: open on a wide shot (`zoom` about 1.02), then one detail per beat (text, character, name, hands, hem), alternate the sign of `tilt`, keep `zoom` at 1.7 or less on 768 px sources, and end wide. Use `cut` transitions; the push is the transition. This re-frames the footage; it cannot create a real new camera angle.
 
@@ -187,7 +187,7 @@ node clean.mjs --cache                        # also the webpack cache
 Retention policy (no approval needed; the requester can change the numbers with environment variables):
 
 - **After every job**, once the report's output files exist, run `node clean.mjs --auto --keep=<name>`. It removes scratch, removes the media of jobs untouched for `REELS_KEEP_DAYS` days (default 30), then trims the oldest jobs until job folders fit in `REELS_MAX_GB` (default 20). It takes all inputs before any outputs, and adds `--cache` when the cache passes 1 GB. Jobs changed in the last 24 hours and the jobs in `--keep` are never touched.
-- **Inputs of a delivered job:** if every input of the job has another copy outside `reels/` (it was copied from a folder that still has it), also run `node clean.mjs --job=<name> --inputs`. If any input exists only in `public/`, keep the inputs; the retention window removes them later.
+- **Inputs of a delivered job:** if every input of the job has another copy outside `reels/` (it was copied from a folder that still has it), also run `node clean.mjs --job=<name> --inputs` — **unless** the requester wants to review or edit the job in Remotion Studio (`npm run studio`), in which case keep `public/<name>/` so Studio can play the media. All job files in `jobs/` and `jobs/_local/` appear automatically under the `Jobs` folder in Studio. If any input exists only in `public/`, keep the inputs; the retention window removes them later.
 - **Outputs** are removed only by the retention window or the size budget, never right after delivery. Whoever consumes the videos has `REELS_KEEP_DAYS` days to pick them up.
 - **Loose files** directly in `public/` or `exports/` are never removed. List them in the report as "unmanaged" so someone can file or delete them.
 - **Job files** (`jobs/<name>.json`) are never removed. They are tiny, and with the media put back they re-render the same video.
